@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Conference Badge Printing</title>
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
+
+<style>
+
+/* =========================================================
+   TECH LOGGER — INTERFACE STYLING ONLY
+   DO NOT CHANGE JAVASCRIPT / BACKEND
+========================================================= */
+
+:root{
+    --tech-navy:#0B1F3A;
+    --tech-green:#009879;
+    --tech-gold:#D4AF37;
+    --light-bg:#f4f6f8;
+    --border:#e5e7eb;
+    --text:#1f2937;
+    --muted:#6b7280;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+body{
+    background:var(--light-bg);
+    color:var(--text);
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+    margin:0;
+}
+
+
+/* =========================================================
+   TOP HEADER
+========================================================= */
+
+body::before{
+    content:"TECH LOGGER   |   BADGE PRINTING STATION";
+    display:block;
+
+    background:var(--tech-navy);
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    letter-spacing:.8px;
+
+    padding:18px 30px;
+
+    border-bottom:4px solid var(--tech-gold);
+
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.container-fluid{
+    max-width:1450px;
+}
+
+
+/* =========================================================
+   LEFT PARTICIPANT PANEL
+========================================================= */
+
+.participant-panel{
+
+    background:white;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 4px 15px rgba(11,31,58,.08);
+
+    overflow:hidden;
+
+}
+
+
+/* =========================================================
+   PARTICIPANT HEADER
+========================================================= */
+
+.participant-header{
+
+    background:var(--tech-navy);
+
+    color:white;
+
+    padding:18px;
+
+    border-bottom:3px solid var(--tech-green);
+
+}
+
+
+.participant-header h5{
+
+    font-weight:700;
+
+    margin-bottom:12px;
+
+}
+
+
+/* SEARCH */
+
+.participant-header input{
+
+    border:0;
+
+    border-radius:7px;
+
+    padding:10px 12px;
+
+    box-shadow:none;
+
+}
+
+
+.participant-header input:focus{
+
+    border-color:var(--tech-green);
+
+    box-shadow:
+        0 0 0 2px rgba(0,152,121,.15);
+
+}
+
+
+/* =========================================================
+   PARTICIPANT LIST
+========================================================= */
+
+.participant-list{
+
+    background:white;
+
+}
+
+
+.participant-item{
+
+    padding:14px 16px;
+
+    border-bottom:1px solid #edf0f2;
+
+    cursor:pointer;
+
+    transition:
+        background .2s ease,
+        border-left .2s ease;
+
+}
+
+
+.participant-item:hover{
+
+    background:#f0f8f5;
+
+}
+
+
+.participant-item.active{
+
+    background:#e5f5ef;
+
+    border-left:4px solid var(--tech-green);
+
+    padding-left:12px;
+
+}
+
+
+.participant-name{
+
+    font-weight:700;
+
+    color:var(--tech-navy);
+
+    font-size:14px;
+
+}
+
+
+.participant-info{
+
+    font-size:12px;
+
+    color:var(--muted);
+
+    margin-top:2px;
+
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status{
+
+    font-size:10px;
+
+    font-weight:600;
+
+    padding:4px 7px;
+
+    border-radius:20px;
+
+}
+
+
+/* =========================================================
+   RIGHT PREVIEW CARD
+========================================================= */
+
+.card{
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    box-shadow:
+        0 4px 15px rgba(11,31,58,.07) !important;
+
+}
+
+
+/* =========================================================
+   PREVIEW TITLE
+========================================================= */
+
+.card h3{
+
+    color:var(--tech-navy);
+
+    font-weight:700;
+
+}
+
+
+/* =========================================================
+   PRINT BUTTON
+========================================================= */
+
+.btn-primary{
+
+    background:var(--tech-green);
+
+    border-color:var(--tech-green);
+
+}
+
+
+.btn-primary:hover{
+
+    background:#007f65;
+
+    border-color:#007f65;
+
+}
+
+
+/* =========================================================
+   GENERAL BUTTONS
+========================================================= */
+
+.btn{
+
+    border-radius:6px;
+
+    font-weight:600;
+
+}
+
+
+/* =========================================================
+   BADGE
+   IMPORTANT:
+   THIS DOES NOT CHANGE YOUR BADGE DESIGN
+========================================================= */
+
+.badge-card{
+
+    width:350px;
+
+    margin:auto;
+
+    background:white;
+
+    border:2px solid #006b3f;
+
+    padding:20px;
+
+    text-align:center;
+
+    border-radius:10px;
+
+}
+
+
+/* =========================================================
+   QR
+========================================================= */
+
+.qr{
+
+    width:120px;
+
+    height:120px;
+
+}
+
+
+/* =========================================================
+   EMPTY BADGE MESSAGE
+========================================================= */
+
+#emptyBadge{
+
+    color:var(--muted);
+
+    font-size:15px;
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.participant-list::-webkit-scrollbar{
+
+    width:7px;
+
+}
+
+
+.participant-list::-webkit-scrollbar-track{
+
+    background:#f1f1f1;
+
+}
+
+
+.participant-list::-webkit-scrollbar-thumb{
+
+    background:#c4cbd1;
+
+    border-radius:10px;
+
+}
+
+
+.participant-list::-webkit-scrollbar-thumb:hover{
+
+    background:var(--tech-green);
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:991px){
+
+    body::before{
+
+        font-size:15px;
+
+        padding:15px 18px;
+
+    }
+
+    .participant-list{
+
+        max-height:400px;
+
+    }
+
+}
+
+
+/* =========================================================
+   PRINT
+   BADGE REMAINS THE SAME
+========================================================= */
+
+@media print{
+
+    body *{
+
+        visibility:hidden;
+
+    }
+
+    #badge,
+    #badge *{
+
+        visibility:visible;
+
+    }
+
+    #badge{
+
+        position:absolute;
+
+        left:0;
+
+        top:0;
+
+        width:100%;
+
+    }
+
+    .no-print{
+
+        display:none !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   ADD-ON ONLY — GRADIENT + DARK/LIGHT THEME
+   DO NOT REMOVE OR CHANGE ANY EXISTING CODE
+========================================================= */
+
+/* LIGHT THEME */
+body{
+    background:
+        linear-gradient(
+            135deg,
+            #eef4f7 0%,
+            #ffffff 45%,
+            #e8f5f1 100%
+        ) !important;
+
+    background-attachment:fixed !important;
+}
+
+
+/* DARK THEME */
+@media (prefers-color-scheme: dark){
+
+    body{
+        background:
+            linear-gradient(
+                135deg,
+                #071525 0%,
+                #0B1F3A 45%,
+                #062f29 100%
+            ) !important;
+
+        color:#f1f5f9 !important;
+    }
+
+    .participant-panel,
+    .card{
+        background:
+            linear-gradient(
+                145deg,
+                rgba(20,35,55,.96),
+                rgba(10,28,40,.96)
+            ) !important;
+
+        border-color:rgba(255,255,255,.10) !important;
+    }
+
+    .participant-list{
+        background:rgba(10,25,40,.75) !important;
+    }
+
+    .participant-item{
+        border-bottom-color:rgba(255,255,255,.08) !important;
+    }
+
+    .participant-item:hover{
+        background:rgba(0,152,121,.16) !important;
+    }
+
+    .participant-item.active{
+        background:rgba(0,152,121,.22) !important;
+    }
+
+    .participant-name,
+    .card h3{
+        color:#ffffff !important;
+    }
+
+    .participant-info,
+    #emptyBadge{
+        color:#aeb8c4 !important;
+    }
+
+    .participant-panel > .px-3{
+        background:rgba(255,255,255,.04) !important;
+    }
+
+    .participant-header input{
+        background:#17283b !important;
+        color:#ffffff !important;
+        border-color:rgba(255,255,255,.15) !important;
+    }
+
+    .participant-header input::placeholder{
+        color:#9ca9b7 !important;
+    }
+
+    .badge-card{
+        /* Badge itself remains visually unchanged */
+        background:#ffffff !important;
+        color:#1f2937 !important;
+    }
+
+}
+
+
+/* =========================================================
+   SOFT GRADIENT GLOW — BACKGROUND ONLY
+========================================================= */
+
+body{
+    position:relative;
+}
+
+body::after{
+    content:"";
+
+    position:fixed;
+
+    width:420px;
+    height:420px;
+
+    right:-180px;
+    bottom:-180px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,152,121,.13),
+            transparent 70%
+        );
+
+    pointer-events:none;
+
+    z-index:-1;
+}
+
+
+/* DARK MODE GLOW */
+
+@media (prefers-color-scheme: dark){
+
+    body::after{
+        background:
+            radial-gradient(
+                circle,
+                rgba(0,152,121,.18),
+                transparent 70%
+            );
+    }
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container-fluid mt-4">
+
+
+<div class="row g-4">
+
+
+<!-- ==================================================
+     LEFT — PARTICIPANTS
+================================================== -->
+
+<div class="col-lg-4 no-print">
+
+    <div class="participant-panel">
+
+        <div class="participant-header">
+
+            <h5 class="mb-2">
+                Participants
+            </h5>
+
+            <input
+                type="text"
+                id="search"
+                class="form-control"
+                placeholder="Search participant..."
+                oninput="searchParticipants()"
+            >
+
+        </div>
+
+
+        <div class="px-3 py-2">
+
+            <small class="text-muted">
+
+                Registered:
+                <b id="total">0</b>
+
+                &nbsp;&nbsp;
+
+                Printed:
+                <b id="printed">0</b>
+
+            </small>
+
+        </div>
+
+
+        <div
+            id="participantList"
+            class="participant-list"
+        >
+
+            <div class="text-center text-muted p-4">
+
+                Loading participants...
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     RIGHT — EXACT BADGE PREVIEW
+================================================== -->
+
+<div class="col-lg-8">
+
+    <div class="card p-4 shadow no-print">
+
+        <h3>
+            Conference Badge Printing
+        </h3>
+
+    </div>
+
+
+    <br>
+
+
+    <div
+        id="badge"
+        class="badge-card"
+        style="display:none;"
+    >
+
+        <h4 id="name"></h4>
+
+        <p id="rank"></p>
+
+        <p id="region"></p>
+
+        <p id="facility"></p>
+
+        <p>
+            Code:
+            <b id="regCode"></b>
+        </p>
+
+        <!-- QR is kept hidden for now,
+             exactly like your sample -->
+
+        <!--
+        <img
+            id="qrImage"
+            class="qr"
+        >
+        -->
+
+
+        <br>
+        <br>
+
+
+        <button
+            class="btn btn-primary no-print"
+            onclick="printBadge()"
+            id="printButton"
+        >
+
+            Print Badge
+
+        </button>
+
+    </div>
+
+
+    <!-- Nothing selected -->
+
+    <div
+        id="emptyBadge"
+        class="text-center text-muted p-5 no-print"
+    >
+
+        Select a participant from the left.
+
+    </div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================================
+   TECH LOGGER BACKEND
+========================================================= */
+
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbwzjP7-Qk0yDBshiUeR-OF5ushwmNTRXsEv-XhGrx4A-G5USqoBLuDPHOqYjcbY-pZJ/exec";
+
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let eventId = null;
+
+let participants = [];
+
+let filteredParticipants = [];
+
+let selectedParticipant = null;
+
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initialize
+);
+
+
+async function initialize(){
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    /*
+     * Check whether Event Manager
+     * supplied an Event ID.
+     */
+
+    eventId =
+        params.get("eventId");
+
+
+    /*
+     * =============================================
+     * OPENED FROM EVENT MANAGER
+     * =============================================
+     */
+
+    if(eventId){
+
+        console.log(
+            "Event ID supplied:",
+            eventId
+        );
+
+        await loadParticipants();
+
+        return;
+
+    }
+
+
+    /*
+     * =============================================
+     * OPENED DIRECTLY
+     * =============================================
+     *
+     * Find the active/open event automatically.
+     */
+
+    try{
+
+        console.log(
+            "No Event ID supplied."
+        );
+
+        console.log(
+            "Finding active event..."
+        );
+
+
+        const response =
+            await fetch(
+                SCRIPT_URL +
+                "?action=events"
+            );
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "Events:",
+            result
+        );
+
+
+        if(
+            !result.success ||
+            !result.events ||
+            !result.events.length
+        ){
+
+            throw new Error(
+                "No events available."
+            );
+
+        }
+
+
+        /*
+         * Look for Active or Open event.
+         */
+
+        let activeEvent =
+            result.events.find(
+                function(event){
+
+                    const status =
+                        String(
+                            event.Status || ""
+                        )
+                        .trim()
+                        .toLowerCase();
+
+
+                    return (
+                        status === "active" ||
+                        status === "open"
+                    );
+
+                }
+            );
+
+
+        /*
+         * If no Active/Open event is found,
+         * use the first event.
+         */
+
+        if(!activeEvent){
+
+            activeEvent =
+                result.events[0];
+
+        }
+
+
+        /*
+         * Get Event ID
+         */
+
+        eventId =
+            activeEvent.EventID;
+
+
+        if(!eventId){
+
+            throw new Error(
+                "Selected event has no Event ID."
+            );
+
+        }
+
+
+        console.log(
+            "Using event:",
+            activeEvent
+        );
+
+
+        /*
+         * Now load participants.
+         */
+
+        await loadParticipants();
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Event loading error:",
+            error
+        );
+
+
+        document.getElementById(
+            "participantList"
+        ).innerHTML = `
+
+            <div class="text-danger text-center p-4">
+
+                Unable to load event.
+
+                <br>
+
+                <small>
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </small>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+/* =========================================================
+   LOAD PARTICIPANTS
+========================================================= */
+
+async function loadParticipants(){
+
+    try{
+
+        const url =
+            SCRIPT_URL +
+            "?action=participants" +
+            "&eventId=" +
+            encodeURIComponent(eventId);
+
+
+        const response =
+            await fetch(url);
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "Participants:",
+            result
+        );
+
+
+        if(!result.success){
+
+            throw new Error(
+                result.message ||
+                "Unable to load participants."
+            );
+
+        }
+
+
+        participants =
+            result.participants || [];
+
+
+        filteredParticipants =
+            [...participants];
+
+
+        updateStats();
+
+        renderParticipants();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        document.getElementById(
+            "participantList"
+        ).innerHTML = `
+
+            <div class="text-danger text-center p-4">
+
+                Unable to load participants.
+
+                <br>
+
+                <small>
+                    ${escapeHtml(error.message)}
+                </small>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+    const total =
+        participants.length;
+
+
+    const printed =
+        participants.filter(function(p){
+
+            return String(
+                p.BadgeStatus || ""
+            ).toLowerCase()
+            === "printed";
+
+        }).length;
+
+
+    document.getElementById(
+        "total"
+    ).innerText =
+        total;
+
+
+    document.getElementById(
+        "printed"
+    ).innerText =
+        printed;
+
+}
+
+
+
+/* =========================================================
+   RENDER PARTICIPANTS
+========================================================= */
+
+function renderParticipants(){
+
+    const list =
+        document.getElementById(
+            "participantList"
+        );
+
+
+    if(!filteredParticipants.length){
+
+        list.innerHTML = `
+
+            <div class="text-center text-muted p-4">
+
+                No participants found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        filteredParticipants
+        .map(function(participant){
+
+            const index =
+                participants.indexOf(
+                    participant
+                );
+
+
+            const printed =
+                String(
+                    participant.BadgeStatus || ""
+                ).toLowerCase()
+                === "printed";
+
+
+            const active =
+                selectedParticipant === participant
+                ? "active"
+                : "";
+
+
+            return `
+
+                <div
+                    class="participant-item ${active}"
+                    onclick="selectParticipant(${index})"
+                >
+
+                    <div class="participant-name">
+
+                        ${escapeHtml(
+                            participant.FullName || ""
+                        )}
+
+                    </div>
+
+
+                    <div class="participant-info">
+
+                        ${escapeHtml(
+                            participant.RegistrationNumber || ""
+                        )}
+
+                    </div>
+
+
+                    <div class="participant-info">
+
+                        ${escapeHtml(
+                            participant.Organisation || ""
+                        )}
+
+                    </div>
+
+
+                    <div class="mt-1">
+
+                        <span
+                            class="badge ${
+                                printed
+                                ? "bg-success"
+                                : "bg-secondary"
+                            } status"
+                        >
+
+                            ${
+                                printed
+                                ? "Printed"
+                                : "Not Printed"
+                            }
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function searchParticipants(){
+
+    const search =
+        document.getElementById(
+            "search"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    if(!search){
+
+        filteredParticipants =
+            [...participants];
+
+    }
+    else{
+
+        filteredParticipants =
+            participants.filter(function(p){
+
+                const text = [
+
+                    p.FullName,
+
+                    p.RegistrationNumber,
+
+                    p.Organisation,
+
+                    p.Position,
+
+                    p.Region,
+
+                    p.Category,
+
+                    p.Phone,
+
+                    p.Email
+
+                ]
+                .join(" ")
+                .toLowerCase();
+
+
+                return text.includes(
+                    search
+                );
+
+            });
+
+    }
+
+
+    renderParticipants();
+
+}
+
+
+
+/* =========================================================
+   SELECT PARTICIPANT
+========================================================= */
+
+function selectParticipant(index){
+
+    selectedParticipant =
+        participants[index];
+
+
+    if(!selectedParticipant){
+
+        return;
+
+    }
+
+
+    renderParticipants();
+
+
+    loadBadge(
+        selectedParticipant
+    );
+
+}
+
+
+
+/* =========================================================
+   LOAD BADGE
+   EXACT SAME DESIGN AS YOUR SAMPLE
+========================================================= */
+
+function loadBadge(participant){
+
+    document.getElementById(
+        "emptyBadge"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "badge"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "name"
+    ).innerText =
+        participant.FullName || "";
+
+
+    document.getElementById(
+        "rank"
+    ).innerText =
+        participant.Position || "";
+
+
+    document.getElementById(
+        "region"
+    ).innerText =
+        participant.Region || "";
+
+
+    document.getElementById(
+        "facility"
+    ).innerText =
+        participant.Organisation || "";
+
+
+    document.getElementById(
+        "regCode"
+    ).innerText =
+        participant.RegistrationNumber || "";
+
+
+    const button =
+        document.getElementById(
+            "printButton"
+        );
+
+
+    if(
+        String(
+            participant.BadgeStatus || ""
+        ).toLowerCase()
+        === "printed"
+    ){
+
+        button.innerText =
+            "Print Again";
+
+    }
+    else{
+
+        button.innerText =
+            "Print Badge";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   PRINT BADGE
+========================================================= */
+
+async function printBadge(){
+
+    if(!selectedParticipant){
+
+        alert(
+            "Please select a participant."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "printButton"
+        );
+
+
+    button.disabled =
+        true;
+
+
+    button.innerText =
+        "Saving...";
+
+
+    try{
+
+        const response =
+            await fetch(
+                SCRIPT_URL,
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+                    },
+
+                    body:JSON.stringify({
+
+                        action:
+                            "printBadge",
+
+                        eventId:
+                            eventId,
+
+                        registrationNumber:
+                            selectedParticipant
+                            .RegistrationNumber
+
+                    })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "Print result:",
+            result
+        );
+
+
+        if(!result.success){
+
+            throw new Error(
+                result.message ||
+                "Unable to mark badge as printed."
+            );
+
+        }
+
+
+        /*
+         * Update local status
+         */
+
+        selectedParticipant.BadgeStatus =
+            "Printed";
+
+
+        updateStats();
+
+        renderParticipants();
+
+
+        button.innerText =
+            "Print Again";
+
+
+        /*
+         * Print
+         */
+
+        setTimeout(function(){
+
+            window.print();
+
+        },300);
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        alert(
+            "Unable to print badge.\n\n" +
+            error.message
+        );
+
+
+        button.innerText =
+            "Print Badge";
+
+    }
+
+
+    button.disabled =
+        false;
+
+}
+
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
